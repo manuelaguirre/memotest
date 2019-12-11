@@ -4,9 +4,9 @@ memotest.deck = ['carta01', 'carta01', 'carta02', 'carta02', 'carta03', 'carta03
     'carta08', 'carta08']
 
 function shuffleDeck(deck) {
-    
+
     for (let index = deck.length - 1; index > 0; index--) {
-        
+
         let randomIndex = Math.floor((Math.random() * (index + 1)));
 
         let b = deck[randomIndex];
@@ -19,19 +19,47 @@ function shuffleDeck(deck) {
 let playGame = false;
 
 
-function manejarInputUsuario(e) {
-    let $carta = event.target;
-    let $cantidadReversas = document.querySelectorAll(".flipped").length;
+document.querySelectorAll('.cuadro').forEach(function($cuadro){
+    $cuadro.onclick = manejarInputUsuario;
+    $cuadro.classList.add("yourvieja");
+});
 
-    if ($carta.classList.match("flipped")){
-        return false;
+
+function manejarInputUsuario(e) {
+
+    let $carta = e.currentTarget;
+    /*if (!estaBocaAbajo($carta)) {
+        return
+    } else {
+        mostrarCarta($carta);
     }
-    
-    if  (numberFlipped)
+*/
+    mostrarCarta($carta);
+    $cartasDescubiertas = document.querySelectorAll(".flipped");
+
+    if ($cartasDescubiertas.length == 2) {
+
+        comprobarMatch($cartasDescubiertas)
+
+
+
+    }
+
+
+}
 
 
 
 function dealCards() {
+
+}
+
+function comprobarMatch(nodeList) {
+
+    let esMatch = (nodeList[0]["data-pattern"] === nodeList[1]["data-pattern"]);
+
+    return esMatch;
+
 
 }
 
@@ -63,11 +91,11 @@ function ocultarCarta($carta) {
 }
 
 
-function estaBocaAbajo($carta){
-    if ($carta.classList.match("flipped")){
+function estaBocaAbajo($carta) {
+    if ($carta.classList.contains("flipped")) {
         return false;
-    }else
-    return true;
+    } else
+        return true;
 
 }
 
