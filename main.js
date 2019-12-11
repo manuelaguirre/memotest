@@ -16,6 +16,20 @@ function shuffleDeck(deck) {
     }
 }
 
+let playGame = false;
+
+
+function manejarInputUsuario(e) {
+    let $carta = event.target;
+    let $cantidadReversas = document.querySelectorAll(".flipped").length;
+
+    if ($carta.classList.match("flipped")){
+        return false;
+    }
+    
+    if  (numberFlipped)
+
+
 
 function dealCards() {
 
@@ -30,9 +44,7 @@ function manejarRonda() {
 }
 
 
-function mostrarCarta() {
 
-}
 
 function borrarCarta() {
 
@@ -42,12 +54,22 @@ function bloquearInputUsuario() {
 
 }
 
-function ocultarCarta() {
+function mostrarCarta($carta) {
+    $carta.classList.add('flipped');
+}
 
+function ocultarCarta($carta) {
+    $carta.classList.remove('flipped');
 }
 
 
+function estaBocaAbajo($carta){
+    if ($carta.classList.match("flipped")){
+        return false;
+    }else
+    return true;
 
+}
 
 
 
