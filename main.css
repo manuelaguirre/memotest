@@ -1,8 +1,8 @@
  /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
  .cuadro {
     background-color: transparent;
-    width: 50px;
-    height: 50px;
+    width: 80%;
+    height: 200px;
     border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
   }
@@ -38,7 +38,31 @@
   
   /* Style the back side */
   .cuadro-back {
-    background-color: dodgerblue;
-    color: white;
     transform: rotateY(180deg);
-  } 
+    
+  }
+
+  .cuadro[data-pattern = "carta01"] .cuadro-back{
+    background-image:url("img/220px-Eduardo_duhalde_presidente.jpg");
+  }
+
+  .cuadro[data-pattern = "carta02"] .cuadro-back{
+    background-image:url("img/220px-Mauricio_Macri_2016.jpg");  }
+
+  .cuadro[data-pattern = "carta03"] .cuadro-back{
+    background-image:url("img/220px-Raúl_Alfonsin.jpg");  }
+
+  .cuadro[data-pattern = "carta04"] .cuadro-back{
+    background-image:url("img/250px-Fernando_de_la_Rúa_con_bastón_y_banda_de_presidente.jpg");  }
+
+  .cuadro[data-pattern = "carta05"] .cuadro-back{
+    background-image:url("img/250px-Menem_con_banda_presidencial.jpg");  }
+
+  .cuadro[data-pattern = "carta06"] .cuadro-back{
+    background-image:url("img/270px-Alberto_fernandez_presidente_(cropped).jpg");  }
+
+  .cuadro[data-pattern = "carta07"] .cuadro-back{
+    background-image:url("img/200px-Cristinakirchnermensaje2010.jpg");  }
+
+  .cuadro[data-pattern = "carta08"] .cuadro-back{
+    background-image:url("img/Presidente_Nestor_Kirchner_(cropped).jpg");  }

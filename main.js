@@ -30,17 +30,20 @@ function repartirMazo(deck, $listaCuadros){
     shuffleDeck(deck);
     for (let index = 0; index < $listaCuadros.length; index++) {
         $listaCuadros[index].setAttribute("data-pattern", deck[index]);
-        
+    
     }
 
-}
 
-function renderizarImagenes(){
+
+
 
 }
 
 let playGame = false;
 
+let $listaCuadros = document.querySelectorAll(".cuadro")
+
+repartirMazo(memotest.deck, $listaCuadros );
 
 document.querySelectorAll('.cuadro').forEach(function($cuadro){
     $cuadro.onclick = manejarInputUsuario;
