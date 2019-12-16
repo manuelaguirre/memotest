@@ -42,6 +42,15 @@
     
   }
 
+  .juego{
+   visibility: hidden;
+  }
+
+  .juego-activo{
+    visibility: visible;
+  }
+
+
   .cuadro[data-pattern = "carta01"] .cuadro-back{
     background-image:url("img/220px-Eduardo_duhalde_presidente.jpg");
   }
@@ -66,3 +75,7 @@
 
   .cuadro[data-pattern = "carta08"] .cuadro-back{
     background-image:url("img/Presidente_Nestor_Kirchner_(cropped).jpg");  }
+
+  .solved{
+      visibility: hidden;}
+

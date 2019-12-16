@@ -3,14 +3,7 @@ let memotest = {};
 memotest.deck = ['carta01', 'carta01', 'carta02', 'carta02', 'carta03', 'carta03', 'carta04', 'carta04', 'carta05', 'carta05', 'carta06', 'carta06', 'carta07', 'carta07',
     'carta08', 'carta08']
 
-let diccionarioImagenes = {"carta01":"img/200px-Cristinakirchnermensaje2010.jpg",
-"carta02": "img/220px-Eduardo_duhalde_presidente.jpg",
-"carta03": "img/220px-Mauricio_Macri_2016.jpg",
-"carta04":"img/220px-Raúl_Alfonsin.jpg",
-"carta05":"img/250px-Fernando_de_la_Rúa_con_bastón_y_banda_de_presidente.jpg",
-"carta06":"img/250px-Menem_con_banda_presidencial.jpg",
-"carta07":"img/270px-Alberto_fernandez_presidente_(cropped).jpg",
-"carta08":"img/Presidente_Nestor_Kirchner_(cropped).jpg"};
+
 
 function shuffleDeck(deck) {
 
@@ -25,12 +18,12 @@ function shuffleDeck(deck) {
     }
 }
 
-function repartirMazo(deck, $listaCuadros){
+function repartirMazo(deck, $listaCuadros) {
     //aquí se requiere que el mazo y la lista de los cuadros tengan el mismo tamaño
     shuffleDeck(deck);
     for (let index = 0; index < $listaCuadros.length; index++) {
         $listaCuadros[index].setAttribute("data-pattern", deck[index]);
-    
+
     }
 
 
@@ -40,32 +33,56 @@ function repartirMazo(deck, $listaCuadros){
 }
 
 let playGame = false;
-
-let $listaCuadros = document.querySelectorAll(".cuadro")
-
-repartirMazo(memotest.deck, $listaCuadros );
-
-document.querySelectorAll('.cuadro').forEach(function($cuadro){
-    $cuadro.onclick = manejarInputUsuario;
+let $containerJuego = document.querySelector("#juego") 
+let $botonComenzarJuego = document.querySelector("#comenzar");
+$botonComenzarJuego.onclick = function(){
+    $containerJuego.classList.add("juego-activo");
     
-});
+
+}
+
+
+
+let $listaCuadros = document.querySelectorAll(".cuadro");
+desbloquearInputUsuario();
+
+repartirMazo(memotest.deck, $listaCuadros);
+
+let fallas = 0
 
 
 function manejarInputUsuario(e) {
 
     let $carta = e.currentTarget;
-    /*if (!estaBocaAbajo($carta)) {
+    if (!estaBocaAbajo($carta)) {
         return
     } else {
         mostrarCarta($carta);
     }
-*/
-    mostrarCarta($carta);
+
     $cartasDescubiertas = document.querySelectorAll(".flipped");
 
     if ($cartasDescubiertas.length == 2) {
+        bloquearInputUsuario();
+        if (esMatch($cartasDescubiertas)) {
+            setTimeout(function () {
+                $cartasDescubiertas.forEach(element => {
+                    borrarCarta(element);
+                    desbloquearInputUsuario();
 
-        comprobarMatch($cartasDescubiertas)
+                })
+            }, 1000);
+
+        } else {
+            setTimeout(function () {
+                $cartasDescubiertas.forEach(element => {
+                    ocultarCarta(element);
+                    desbloquearInputUsuario();
+
+                })
+            }, 1000);
+
+        }
 
 
 
@@ -78,9 +95,9 @@ function manejarInputUsuario(e) {
 
 
 
-function comprobarMatch(nodeList) {
+function esMatch(nodeList) {
 
-    let esMatch = (nodeList[0]["data-pattern"] === nodeList[1]["data-pattern"]);
+    let esMatch = (nodeList[0].dataset.pattern === nodeList[1].dataset.pattern);
 
     return esMatch;
 
@@ -98,12 +115,25 @@ function manejarRonda() {
 
 
 
-function borrarCarta() {
+function borrarCarta($carta) {
+    ocultarCarta($carta);
+    $carta.classList.add("solved");
+}
 
+
+function desbloquearInputUsuario() {
+    document.querySelectorAll('.cuadro').forEach(function ($cuadro) {
+        $cuadro.onclick = manejarInputUsuario;
+
+    });
 }
 
 function bloquearInputUsuario() {
 
+    document.querySelectorAll('.cuadro').forEach(function ($cuadro) {
+        $cuadro.onclick = function () { };
+
+    });
 }
 
 function mostrarCarta($carta) {
