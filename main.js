@@ -18,38 +18,21 @@ function shuffleDeck(deck) {
     }
 }
 
-function repartirMazo(deck, $listaCuadros) {
-    //aquí se requiere que el mazo y la lista de los cuadros tengan el mismo tamaño
-    shuffleDeck(deck);
-    for (let index = 0; index < $listaCuadros.length; index++) {
-        $listaCuadros[index].setAttribute("data-pattern", deck[index]);
 
-    }
-
-
-
-
-
-}
-
-let playGame = false;
-let $containerJuego = document.querySelector("#juego") 
+let $containerJuego = document.querySelector("#juego");
+let $mensajeFinal = document.querySelector("#fin-juego");
 let $botonComenzarJuego = document.querySelector("#comenzar");
-$botonComenzarJuego.onclick = function(){
+$botonComenzarJuego.onclick = function () {
     $containerJuego.classList.add("juego-activo");
-    
 
 }
 
 
 
 let $listaCuadros = document.querySelectorAll(".cuadro");
-desbloquearInputUsuario();
-
 repartirMazo(memotest.deck, $listaCuadros);
-
-let fallas = 0
-
+desbloquearInputUsuario();
+let turnos = 0;
 
 function manejarInputUsuario(e) {
 
@@ -58,62 +41,54 @@ function manejarInputUsuario(e) {
         return
     } else {
         mostrarCarta($carta);
+
     }
-
     $cartasDescubiertas = document.querySelectorAll(".flipped");
-
     if ($cartasDescubiertas.length == 2) {
         bloquearInputUsuario();
         if (esMatch($cartasDescubiertas)) {
             setTimeout(function () {
+                turnos++;
                 $cartasDescubiertas.forEach(element => {
                     borrarCarta(element);
                     desbloquearInputUsuario();
+                    let cantidadCartasResueltas = document.querySelectorAll(".solved").length;
+                    if (cantidadCartasResueltas === 16) {
+                        terminarJuego();
 
+                    };
                 })
             }, 1000);
-
         } else {
             setTimeout(function () {
+                turnos++;
                 $cartasDescubiertas.forEach(element => {
                     ocultarCarta(element);
                     desbloquearInputUsuario();
-
                 })
             }, 1000);
-
         }
 
 
 
+
     }
-
-
 }
 
 
 
-
+function repartirMazo(deck, $listaCuadros) {
+    //aquí se requiere que el mazo y la lista de los cuadros tengan el mismo tamaño
+    shuffleDeck(deck);
+    for (let index = 0; index < $listaCuadros.length; index++) {
+        $listaCuadros[index].setAttribute("data-pattern", deck[index]);
+    }
+}
 
 function esMatch(nodeList) {
-
     let esMatch = (nodeList[0].dataset.pattern === nodeList[1].dataset.pattern);
-
     return esMatch;
-
-
 }
-
-
-
-
-
-function manejarRonda() {
-
-}
-
-
-
 
 function borrarCarta($carta) {
     ocultarCarta($carta);
@@ -124,15 +99,12 @@ function borrarCarta($carta) {
 function desbloquearInputUsuario() {
     document.querySelectorAll('.cuadro').forEach(function ($cuadro) {
         $cuadro.onclick = manejarInputUsuario;
-
     });
 }
 
 function bloquearInputUsuario() {
-
     document.querySelectorAll('.cuadro').forEach(function ($cuadro) {
         $cuadro.onclick = function () { };
-
     });
 }
 
@@ -150,6 +122,22 @@ function estaBocaAbajo($carta) {
         return false;
     } else
         return true;
+
+}
+
+function terminarJuego() {
+    ocultarTablero();
+    mostrarMensajeFinal();
+}
+
+function ocultarTablero() {
+    $containerJuego.style.visibility = "hidden";
+}
+
+function mostrarMensajeFinal() {
+    $cantidadTurnos = document.querySelector("strong");
+    $cantidadTurnos.innerText = String(turnos);
+    $mensajeFinal.style.visibility = "visible";
 
 }
 
